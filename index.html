@@ -1,56 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>three.js webgl - lines - cubes</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<style>
-			body {
-				background-color: #000000;
-				margin: 0px;
-				overflow: hidden;
-			}
 
-			a {
-				color:#0078ff;
-			}
+<head>
+	<title>EVA | Coplest</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<style>
+		body {
+			background-color: #212121;
+			margin: 0px;
+			overflow: hidden;
+		}
+		
+		a {
+			color: #0078ff;
+		}
+		
+		#info {
+			position: absolute;
+			top: 10px;
+			width: 100%;
+			color: #ffffff;
+			padding: 5px;
+			font-family: Monospace;
+			font-size: 13px;
+			text-align: center;
+			z-index: 100;
+		}
+		
+		a {
+			color: orange;
+			text-decoration: none;
+		}
+		
+		a:hover {
+			color: #0080ff;
+		}
+	</style>
+</head>
 
-			#info {
-				position: absolute;
-				top: 10px; width: 100%;
-				color: #ffffff;
-				padding: 5px;
-				font-family: Monospace;
-				font-size: 13px;
-				text-align: center;
-				z-index:100;
-			}
+<body>
 
-			a {
-				color: orange;
-				text-decoration: none;
-			}
+	<div id="info">
+		EVA | Coplest
+	</div>
 
-			a:hover {
-				color: #0080ff;
-			}
+	<script src="js/threejs/three.js"></script>
 
-		</style>
-	</head>
-	<body>
+	<script src="js/geometries/hilbert3D.js"></script>
 
-		<div id="info">
-			<a href="http://threejs.org" target="_blank">three.js</a> - lines WebGL demo
-			[<a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hilbert curve</a> thanks to <a href="http://www.openprocessing.org/visuals/?visualID=15599">Thomas Diewald</a>]
-		</div>
+	<script src="js/Detector.js"></script>
 
-		<script src="js/threejs/three.js"></script>
-
-		<script src="js/geometries/hilbert3D.js"></script>
-
-		<script src="js/Detector.js"></script>
-
-		<script>
+	<script>
 
 			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
@@ -59,7 +60,8 @@
 			windowHalfX = window.innerWidth / 2,
 			windowHalfY = window.innerHeight / 2,
 
-			camera, scene, renderer;
+			camera, scene, renderer, m3;
+
 
 			init();
 			animate();
@@ -77,8 +79,9 @@
 				camera.position.y = 60;
 
 				scene = new THREE.Scene();
-
+				
 				renderer = new THREE.WebGLRenderer();
+				renderer.setClearColor( 0x212121 );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				container.appendChild( renderer.domElement );
@@ -95,9 +98,10 @@
 
 				// lines
 
-				var line, p, scale = 0.3, d = 125, c1 = 0x553300, c2 = 0x555555, c3 = 0x01525b, g1 = geometry,
-					m3 = new THREE.LineBasicMaterial( { color: c3, opacity: 1, blending: THREE.AdditiveBlending, transparent: true } ),
-					parameters = [ [ m3, scale*0.5, [0,0,0],  g1 ]
+				var line, p, scale = 0.3, d = 125, c3 = 0x01525b, g1 = geometry;
+				m3 = new THREE.LineBasicMaterial( { color: c3, opacity: 1, blending: THREE.AdditiveBlending, transparent: true } )
+					
+				var	parameters = [ [ m3, scale*0.5, [0,0,0],  g1 ]
 								   ];
 
 				for ( i = 0; i < parameters.length; i ++ ) {
@@ -115,6 +119,20 @@
 					scene.add( line );
 
 				}
+
+
+				// world
+
+				var s = 250;
+
+				
+				// lights
+
+				var dirLight = new THREE.DirectionalLight( 0xffffff, 0.05 );
+				dirLight.position.set( 0, -1, 0 ).normalize();
+				scene.add( dirLight );
+
+				dirLight.color.setHSL( 0.1, 0.7, 0.5 );
 
 				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 				document.addEventListener( 'touchstart', onDocumentTouchStart, false );
@@ -202,6 +220,11 @@
 
 			}
 
+			function listening(){
+				m3.color.setHex( 0x992800 );
+			}
+
 		</script>
-	</body>
+</body>
+
 </html>
