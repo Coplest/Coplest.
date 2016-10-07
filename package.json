@@ -1,0 +1,23 @@
+{
+  "name": "coplest.eva",
+  "description": "web browser using Microsoft Cognitive Services",
+  "version": "0.0.1",
+  "private": false,
+  "author": "Camilo Rodríguez <camilo.rodriguez@coplest.com>",
+  "homepage": "www.coplest.com",
+  "contributors": [ "Camilo Rodríguez <camilo.rodriguez@coplest.com> (https://github.com/thEpisode)" ],
+  "bugs": { "url": "https://github.com/Coplest/Coplest.Eva/issues" },
+  "dependencies": {
+    "jquery": "3.1.x",
+    "three": "0.81.x"
+  },
+  "devDependencies": {
+    
+  },
+  "keywords": ["Microsoft", "Cognitive", "Service", "Siri", "Cortana", "Three.js", "Three", "Machine", "Learning", "Speech"],
+  "repository": "https://github.com/Coplest/Coplest.Eva",
+  "licenses": [{
+    "type": "GNU GENERAL PUBLIC LICENSE",
+    "url": "https://github.com/Coplest/Coplest.Eva/blob/master/LICENSE"
+  }]
+}

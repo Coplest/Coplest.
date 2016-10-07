@@ -5,11 +5,14 @@
 	<title>EVA | Coplest</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
 	<style>
 		body {
 			background-color: #212121;
 			margin: 0px;
 			overflow: hidden;
+			color: #ffffff;
+			font-family: 'Open Sans', sans-serif;
 		}
 		
 		a {
@@ -20,7 +23,6 @@
 			position: absolute;
 			top: 10px;
 			width: 100%;
-			color: #ffffff;
 			padding: 5px;
 			font-family: Monospace;
 			font-size: 13px;
@@ -29,21 +31,84 @@
 		}
 		
 		a {
-			color: orange;
+			color: #ffa500;
 			text-decoration: none;
 		}
 		
 		a:hover {
-			color: #0080ff;
+			color: #ffcf76;
+		}
+
+		.input-search{
+			background: rgba(0,0,0,0.5);
+			border: 1px rgba(0,0,0,0.9) solid;
+			width: 425px;
+			top: 35px;
+			left: 40%;
+			position: absolute;
+			font-size: 18px;
+			color: white;
+			height: auto;
+			padding: 10px;
+		}
+		textarea:focus, input:focus{
+			outline: none;
+		}
+		.search-results{
+			background: rgba(0,0,0,0.5);
+			border: 1px rgba(0,0,0,0.9) solid;
+			position: absolute;
+			width: 300px;
+			max-width: 300px;
+			height: 90vh;
+			min-height: 90vh;
+			max-height: 90vh;
+			top: 78px;
+			right: 20px;
+			overflow-y: auto;
+		}
+		.search-results>article{
+			width: 90%;
+			display: block;
+			margin: 5px 20px;
+		}
+		.search-results>article>a{
+			word-wrap: break-word;
+		}
+		.search-results>article>span{
+			word-wrap: break-word;
+			display: block;
+			margin-top: 5px;
+			font-weight: 300;
+			font-size: 12px;
+		}
+		.search-results>article>span:nth-child(3){
+			color:#A7E1E5;
+		}
+		.search-results>article>hr{
+			display: block;
+			height: 1px;
+			border: 0;
+			border-top: 1px solid #333;
+			padding: 0; 
 		}
 	</style>
+	
 </head>
 
 <body>
 
 	<div id="info">
 		EVA | Coplest
+
+		<input type="search" id="searchbox" name="searchbox" placeholder="Type anything..." value="" autocomplete="off" title="search" spellcheck="false" autofocus class="input-search" />
 	</div>
+
+	<section class="search-results">
+		
+	</section>
+
+	<script src="node_modules/jquery/dist/jquery.min.js"></script>
 
 	<script src="js/threejs/three.js"></script>
 
@@ -211,7 +276,40 @@
 				m3.color.setHex( 0x992800 );
 			}
 
+			function searchAPICognitiveService(searchTerm){
+				if(searchTerm.length > 0){
+					
+					let uri = 'https://api.cognitive.microsoft.com/bing/v5.0/search?q=' + searchTerm + '&count=10&offset=0&mkt=es-ES&safesearch=Moderate';
+					$.ajax({
+						url: uri,
+						type: 'GET',
+						headers: {
+							"Ocp-Apim-Subscription-Key": "713895672f5f4ba3bf0e0e9dc43208a5"
+						},
+						success: function (data) {
+							let html = '';
+							$('.search-results>article').remove();
+							console.log(data.webPages.value);
+							$.each(data.webPages.value, function(index, result){
+								html += '<article>'+
+										'<a href="' + result.url + '">' + result.name + '</a>'+
+										'<span>' + result.snippet + '</span>'+
+										'<span>' + result.displayUrl + '</span>'+
+										'<hr />'+
+									'</article>';
+							})
+							$('.search-results').append(html);
+						},
+						error: function (data) {
+							console.log(data);
+						}
+					})
+				}				
+			}
+
 		</script>
+
+
 </body>
 
 </html>
