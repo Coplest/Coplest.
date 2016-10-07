@@ -82,7 +82,7 @@
 			font-weight: 300;
 			font-size: 12px;
 		}
-		.search-results>article>span:nth-child(3){
+		.search-results>article>span:nth-child(1){
 			color:#A7E1E5;
 		}
 		.search-results>article>hr{
@@ -101,7 +101,9 @@
 	<div id="info">
 		EVA | Coplest
 
-		<input type="search" id="searchbox" name="searchbox" placeholder="Type anything..." value="" autocomplete="off" title="search" spellcheck="false" autofocus class="input-search" />
+		<form action="" class="search-form">
+			<input type="search" id="searchbox" name="searchbox" placeholder="Type anything..." value="" autocomplete="off" title="search" spellcheck="false" autofocus class="input-search" />
+		</form>		
 	</div>
 
 	<section class="search-results">
@@ -307,6 +309,11 @@
 				}				
 			}
 
+			$(".search-form").submit(function () {
+				searchAPICognitiveService($("#searchbox").val());
+
+				return false;
+        	});
 		</script>
 
 
