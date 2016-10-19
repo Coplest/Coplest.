@@ -66,6 +66,7 @@
 			top: 78px;
 			right: 20px;
 			overflow-y: auto;
+			opacity: 0;
 		}
 		.search-results>article{
 			width: 90%;
@@ -92,6 +93,22 @@
 			border-top: 1px solid #333;
 			padding: 0; 
 		}
+		.reveal{
+			opacity: 1;
+			-webkit-animation-name: reveal; /* Chrome, Safari, Opera */
+    		-webkit-animation-duration: 1.25s; /* Chrome, Safari, Opera */
+			animation-name: reveal;
+    		animation-duration: 1.25s;
+		}
+		@keyframes reveal {
+			from {opacity:0}
+    		to {opacity:1}
+		}
+
+		@-webkit-keyframes reveal {
+			from {opacity:0}
+    		to {opacity:1}
+		}
 	</style>
 	
 </head>
@@ -102,7 +119,7 @@
 		EVA | Coplest
 
 		<form action="" class="search-form">
-			<input type="search" id="searchbox" name="searchbox" placeholder="Type anything..." value="" autocomplete="off" title="search" spellcheck="false" autofocus class="input-search" />
+			<input type="search" id="searchbox" name="searchbox" placeholder="Escribe algo..." value="" autocomplete="off" title="search" spellcheck="false" autofocus class="input-search" />
 		</form>		
 	</div>
 
@@ -301,6 +318,7 @@
 									'</article>';
 							})
 							$('.search-results').append(html);
+							$('.search-results').addClass('reveal');
 						},
 						error: function (data) {
 							console.log(data);
